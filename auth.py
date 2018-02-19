@@ -2,12 +2,9 @@
 import paramiko
 import boto3
 import time
-import subprocess
-import awscli
 import os
 import sys
 import getpass
-
 
 def connection():
 	print ("Creating ssh session")
@@ -46,8 +43,6 @@ def remove_user(name):
 		print ("User has been removed from SSH")
 		c.close()
 
-
-
 def main():
 	if len(sys.argv) >= 2:
 	    if sys.argv[1] == "--add":
@@ -57,8 +52,12 @@ def main():
 	    elif sys.argv[1] == "--rm":
 			name = raw_input("Enter the user name: ")
 			remove_user(name)
+	    elif sys.argv[1] == "--help":
+			print ("Commandline arguments:")
+			print ("		  	--add : to add users")
+			print ("		  	--rm : to remove users")
 	else:
-	    print "yolo"
+	    print "Invalid command. Type " + sys.argv[0] + " --help for additional information"
 
 if __name__ == '__main__':
   main()
