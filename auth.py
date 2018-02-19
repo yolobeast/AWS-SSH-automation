@@ -20,28 +20,21 @@ def connection():
 	c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 	try :
 		c.connect( 'ec2-52-14-60-141.us-east-2.compute.amazonaws.com', username = "ec2-user", pkey = k)
-		print(c)
 		return c
 	except Exception:
 		print("The Server is unavalible at the moment")
 		return None
 
-def PerformCommand(command, information="", mode=None):
-	print information
-	if mode:
-		return os.popen(command + " > /dev/null", mode)
-	else:
-		return os.popen(command + " > /dev/null")
-
 def add_user(name,password):
 	c = connection()
 	if (c != None):
-		stdin , stdout, stderr = c.exec_command(" printf 'Adding user info \n';" +
-		                                        "sudo adduser " + str(name) + ";"
-		                                        #"printf '\nAdding password \n';" +
-		                                        #"sudo passwd sathi;" +
-		                                        "printf '\n User added in SSH\n\n';")
-		print ("User added in SSH")
+		channel = c.invoke_shell()
+		channel.send('sudo adduser '+ str(name) +'\n')
+		channel.send('sudo passwd ' + str(name) +'\n')
+		time.sleep(3)
+		channel.send(str(password)+'\n')
+		time.sleep(3)
+		channel.send(str(password)+'\n')
 		c.close()
 
 def remove_user(name):
