@@ -18,11 +18,10 @@ def connection():
 	ec2 = session.resource('ec2', region_name='us-east-2a')
 	instance = ec2.Instance(id='i-0f1343218c8520018') # instance id
 
-	SSH_secreat_file_path = paramiko.RSAKey.from_private_key_file('sathi-ssh.pem')
 	Connection_to_AWS = paramiko.SSHClient()
 	Connection_to_AWS.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 	try :
-		Connection_to_AWS.connect( 'ec2-52-14-60-141.us-east-2.compute.amazonaws.com', username = "ec2-user", pkey = SSH_secreat_file_path)
+		Connection_to_AWS.connect( 'ec2-52-14-60-141.us-east-2.compute.amazonaws.com', username = "ec2-user", password = "yolo_beast_123")
 		return Connection_to_AWS
 	except Exception:
 		print("The Server is unavalible at the moment")
