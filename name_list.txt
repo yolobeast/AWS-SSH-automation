@@ -1,4 +1,2 @@
 User:
-sathi
-yolo
-yolo_beast
+yolo_one

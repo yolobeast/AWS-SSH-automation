@@ -74,13 +74,16 @@ def main():
 				print("this user already has the SSH credinatials")
 	    elif sys.argv[1] == "--rm":
 			name = raw_input("Enter the user name: ")
-			with open('name_list.txt') as f:
-			    for line in f:
+			read_file = open('name_list.txt', 'r')
+			readlines = read_file.readlines()
+			read_file.close()
+			check = 1
+			with open('name_list.txt', 'w') as f:
+			    for line in readlines:
 			        if name in line:
-			            check = 0
-			            break
-			        else:
-			            check = 1
+						check = 0
+						continue
+			        f.write(line)
 			f.close()
 			if (check==0):
 			    remove_user(name)
